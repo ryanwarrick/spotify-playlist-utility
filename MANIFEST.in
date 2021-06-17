@@ -1,0 +1,31 @@
+### INCLUDES ###
+# Defines single files to include in installable project
+
+# Include the package requirements doc for building the package 
+# (Build Systems Requirements)
+include pyproject.toml
+
+# Include the setup.cfg & setup.py files
+include setup.cfg # Defines characteristics and required dependencies of project
+include setup.py # Basic shell of setup.py, real work done in setup.cfg
+
+# Include this MANIFEST.in files
+include MANIFEST.in # Defines files/dirs required to create installable project
+
+# Include the README.md file
+include README.md # Human-readable intro to project repo
+
+# Include the LICENSE.txt file
+include LICENSE.txt # Defines boiler-plate legal code related to FOSS
+
+# Include the example config.ini file
+include config.ini
+
+# Include the main.py script
+include main.py
+
+### GRAFTS ###
+# Defines directories to include (recursively)
+
+# Graft the src dir
+graft src
