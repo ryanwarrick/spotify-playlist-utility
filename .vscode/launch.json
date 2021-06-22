@@ -1,0 +1,99 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        { // CONFIG 01) Function: Export Saved Tracks
+            // Standard debug config ran from prj root (workspaceFolder)
+            "name": "Function: Export Saved Tracks",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            // Passing config & function specific args
+            "args": [
+                "${input:pickConfigFile}", // Pass configured ini file.
+                "-s", // Export Saved Tracks File Path Argument Value
+                "${input:pickImportExportFilePath}"
+            ]
+        },
+        { // CONFIG 02) Function: Export Playlist Tracks
+            // Standard debug config ran from prj root (workspaceFolder)
+            "name": "Function: Export Playlist Tracks",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            // Passing config & function specific args
+            "args": [
+                "${input:pickConfigFile}", // Pass configured ini file.
+                "-p", // Export Playlist Tracks File Path Argument Value
+                "${input:pickImportExportFilePath}"
+            ]
+        },
+        { // CONFIG 03) Function: Create Playlist
+            // Standard debug config ran from prj root (workspaceFolder)
+            "name": "Function: Create Playlist",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            // Passing config & function specific args
+            "args": [
+                "${input:pickConfigFile}", // Pass configured ini file.
+                "-c", // Create Playlist File Path Argument Value
+                "${input:pickImportExportFilePath}"
+            ]
+        },
+        { // CONFIG 04) Function: List Playlists
+            // Standard debug config ran from prj root (workspaceFolder)
+            "name": "Function: List Playlists",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            // Passing config & function specific args
+            "args": [
+                "${input:pickConfigFile}", // Pass configured ini file.
+                "-l", // List Playlist Argument
+            ]
+        },
+        { // CONFIG 05) Function: Shuffle Playlists
+            // Standard debug config ran from prj root (workspaceFolder)
+            "name": "Function: Shuffle Playlists",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            // Passing config & function specific args
+            "args": [
+                "${input:pickConfigFile}", // Pass configured ini file.
+                "-z", // Shuffle Playlist Argument
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "pickConfigFile",
+            "description": "Select config file to be used by the script.",
+            "type": "pickString",
+            "options": [
+                "${workspaceFolder}${pathSeparator}config_populated.ini",
+                "${workspaceFolder}${pathSeparator}config.ini"
+            ],
+            "default": "${workspaceFolder}${pathSeparator}config_populated.ini"
+        },
+        {
+            "id": "pickImportExportFilePath",
+            "description": "Provide file path for import/export file to be used by the selected script function.",
+            "type": "promptString",
+            "default": "${workspaceFolder}${pathSeparator}import_export_data.csv"
+        }
+    ]
+}
