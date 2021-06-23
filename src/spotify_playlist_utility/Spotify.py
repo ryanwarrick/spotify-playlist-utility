@@ -12,6 +12,11 @@ from spotify_playlist_utility.TrackLists import Playlist, TrackListing
 
 class SpotifyManager(object):
     def __init__(self, config_parser: configparser.ConfigParser):
+        """[summary]
+
+        :param config_parser: [description]
+        :type config_parser: configparser.ConfigParser
+        """
         self.config_parser = config_parser
         self.authorized = False
         self.sp = None
@@ -34,7 +39,7 @@ class SpotifyManager(object):
 
         Args:
             data (dict): Dictionary representing representing a Spotify
-        API "TrackObject"
+            API "TrackObject"
 
         Returns:
             Track: Track object capturing key elements of dict data
@@ -243,9 +248,8 @@ class SpotifyManager(object):
 
     def create_playlist(self, filepath: str) -> str:
         """
-        "Generate a playlist using the name and data of a .csv at "
-              "the specified file path (format must match that of exported "
-              ".csv files).")
+        Generate a playlist using the name and data of a .csv at the specified 
+        file path (format must match that of exported .csv files).
 
         Args:
             filepath (str): File path to .csv file listing desired
