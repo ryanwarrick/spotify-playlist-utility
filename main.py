@@ -3,6 +3,8 @@ import configparser
 
 from spotify_playlist_utility.Spotify import SpotifyManager
 
+# TODO: Remove temp files and those files no longer needed from proj root dir
+
 
 def load_config_parser(config_file_path) -> configparser.ConfigParser:
     # Create the configuration parser
@@ -57,9 +59,10 @@ def main():
     #     help=("Generate .csv listings of tracks for each of the user's "
     #           "playlist's tracks and save to the specified directory (if not specified, "
     #           "default: .\all_playlists\).")
-    #     # TODO: add ending '\' logic (for if there OR not)
-    #     # TODO: build out the directory creation logic
-    #     # TODO: copy and repurpose the export_playlist_tracks function to do as is, just iterate through all playlists
+    # TODO: Add export-all-playlists functionality
+    # add ending '\' logic (for if there OR not)
+    # build out the directory creation logic
+    # copy and repurpose the export_playlist_tracks function to do as is, just iterate through all playlists
     # )
     args = argument_parser.parse_args()
 

@@ -1,4 +1,4 @@
-
+<!-- TODO: Fix dimensions/scaling for logo image -->
 ![Logo](https://github.com/ryanwarrick/spotify-playlist-utility/blob/master/docs/images/snakify.png?raw=true)
 
     
@@ -28,21 +28,27 @@ For example, this project...
     ![license](https://img.shields.io/github/license/ryanwarrick/spotify-playlist-utility)
     ![GitHub last commit](https://img.shields.io/github/last-commit/ryanwarrick/spotify-playlist-utility)
     [![GitHub issues](https://img.shields.io/github/issues/ryanwarrick/spotify-playlist-utility)](https://github.com/ryanwarrick/spotify-playlist-utility/issues)
-    [![code with hearth by GITHUB_USERNAME](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-ryanwarrick-ff1414.svg?style=flat-square)](https://github.com/ryanwarrick)
+    /[![code with hearth by GITHUB_USERNAME](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-ryanwarrick-ff1414.svg?style=flat-square)](https://github.com/ryanwarrick)
 </div>
 
 ## Demo
 
 Demo gifs/pics coming soon...
+<!-- TODO: Add gifs/pics to demo -->
 
   
 ## Installation 
 
 Installation procedures coming soon...
+<!-- TODO: Add installation procedures -->
+
 ## Usage/Examples
 
 Usage/examples coming soon...
+<!-- TODO: Add usage/examples -->
   
 ## Authors
 
 - [@ryanwarrick](https://www.github.com/ryanwarrick)
+
+<!-- TODO: Add contributors section here for Hunter's logo help -->
