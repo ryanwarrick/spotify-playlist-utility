@@ -6,5 +6,6 @@
         "79"
     ],
     "editor.wordWrap": "wordWrapColumn",
-    "editor.wordWrapColumn": 79
+    "editor.wordWrapColumn": 79,
+    "autoDocstring.docstringFormat": "google"
 }
