@@ -51,6 +51,16 @@ def main():
         action='store_true',
         help="Shuffles the track order of a selected spotify playlist."
     )
+    # argument_parser.add_argument(
+    #     "-a", "--export-all-playlists",
+    #     nargs="?", default=None, const='const',
+    #     help=("Generate .csv listings of tracks for each of the user's "
+    #           "playlist's tracks and save to the specified directory (if not specified, "
+    #           "default: .\all_playlists\).")
+    #     # TODO: add ending '\' logic (for if there OR not)
+    #     # TODO: build out the directory creation logic
+    #     # TODO: copy and repurpose the export_playlist_tracks function to do as is, just iterate through all playlists
+    # )
     args = argument_parser.parse_args()
 
     print("(Note: If at any time you see following prompt, 'Enter the URL you "
