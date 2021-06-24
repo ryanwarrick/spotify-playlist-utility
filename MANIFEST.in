@@ -15,17 +15,15 @@ include MANIFEST.in # Defines files/dirs required to create installable project
 # Include the README.md file
 include README.md # Human-readable intro to project repo
 
-# Include the LICENSE.txt file
+# Include the LICENSE file
 include LICENSE.txt # Defines boiler-plate legal code related to FOSS
 
 # Include the example config.ini file
 include config.ini
-
-# Include the main.py script
-include main.py
 
 ### GRAFTS ###
 # Defines directories to include (recursively)
 
 # Graft the src dir
 graft src
+graft docs
