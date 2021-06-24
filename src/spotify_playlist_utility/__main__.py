@@ -1,9 +1,10 @@
 import argparse
 import configparser
+import sys
 
 from spotify_playlist_utility.Spotify import SpotifyManager
 
-# TODO: Remove temp files and those files no longer needed from proj root dir
+# TODO: Add tests (tox or other) to project
 
 
 def load_config_parser(config_file_path) -> configparser.ConfigParser:
@@ -93,4 +94,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
