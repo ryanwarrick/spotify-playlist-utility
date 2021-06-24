@@ -10,7 +10,7 @@
             "name": "Function: Export Saved Tracks",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}${pathSeparator}src${pathSeparator}spotify_playlist_utility${pathSeparator}__main__.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             // Passing config & function specific args
@@ -25,7 +25,7 @@
             "name": "Function: Export Playlist Tracks",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}${pathSeparator}src${pathSeparator}spotify_playlist_utility${pathSeparator}__main__.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             // Passing config & function specific args
@@ -40,7 +40,7 @@
             "name": "Function: Create Playlist",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}${pathSeparator}src${pathSeparator}spotify_playlist_utility${pathSeparator}__main__.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             // Passing config & function specific args
@@ -55,7 +55,7 @@
             "name": "Function: List Playlists",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}${pathSeparator}src${pathSeparator}spotify_playlist_utility${pathSeparator}__main__.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             // Passing config & function specific args
@@ -69,7 +69,7 @@
             "name": "Function: Shuffle Playlists",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}${pathSeparator}src${pathSeparator}spotify_playlist_utility${pathSeparator}__main__.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             // Passing config & function specific args
