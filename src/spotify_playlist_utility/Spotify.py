@@ -11,6 +11,21 @@ from spotify_playlist_utility.TrackLists import Playlist, TrackListing
 
 
 class SpotifyManager(object):
+
+    # Define 'Scopes' class attrs for proper permission scoping of API calls.
+    # Scopes set on a per-function basis - principle of least privilege.
+    SCOPES = {
+        'ExportSavedTracks':
+            'user-library-read',
+        'ExportPlaylistTracks':
+            'playlist-read-private, playlist-read-collaborative',
+        'CreateEditPlaylist': 'playlist-modify-private',
+        'ListPlaylists':
+            'playlist-read-private, playlist-read-collaborative',
+        'ShufflePlaylistTracks':
+            'playlist-read-private, playlist-read-collaborative, playlist-modify-private'
+    }
+
     def __init__(self, config_parser: configparser.ConfigParser):
         """[summary]
 
@@ -20,19 +35,21 @@ class SpotifyManager(object):
         self.config_parser = config_parser
         self.authorized = False
         self.sp = None
+        self.user_id = None
 
     def authorize(self, scope_set: str) -> None:
         if not self.authorized:
-            auth_manager = SpotifyOAuth(client_id=self.config_parser["DEFAULT"]
-                                        ["SpotipyClientID"],
-                                        client_secret=self.config_parser["DEFAULT"]
-                                        ["SpotipyClientSecret"],
-                                        redirect_uri=self.config_parser["DEFAULT"]
-                                        ["RedirectURI"],
-                                        scope=self.config_parser["Scopes"]
-                                        [scope_set])
+            auth_manager = SpotifyOAuth(
+                client_id=self.config_parser["DEFAULT"]["ClientID"],
+                client_secret=self.config_parser["DEFAULT"]["ClientSecret"],
+                redirect_uri=self.config_parser["DEFAULT"]
+                ["RedirectURI"],
+                scope=SpotifyManager.SCOPES[scope_set]
+            )
             self.sp = spotipy.Spotify(auth_manager=auth_manager)
+            me = self.sp.me()
             self.authorized = True
+            self.user_id = self.sp.me()['id']
 
     def build_track_object_from_data(self, data: dict) -> Track:
         """Returns a Track object from a provided dict data
@@ -96,7 +113,7 @@ class SpotifyManager(object):
         Called by arguments:
             "-p"/"--export-playlist-tracks"
             "-l"/"--list-playlists"
-            "-z"/"--shuffle-playlist"
+            "-z"/"--shuffle-playlist-tracks"
 
         Returns:
             typing.List[Playlist]:  List of playlist objects representing the
@@ -123,7 +140,7 @@ class SpotifyManager(object):
         Called by arguments:
             "-p"/"--export-playlist-tracks"
             "-l"/"--list-playlists"
-            "-z"/"--shuffle-playlist"
+            "-z"/"--shuffle-playlist-tracks"
 
         Returns:
             typing.List[Playlist]: List of Playlist objects representing the
@@ -163,6 +180,7 @@ class SpotifyManager(object):
             playlist_track_counts_for_table_printing
         ))
 
+        print("")
         for row_index, data in enumerate(data_for_table_printing):
             line_parts = []
             for column_index, value in enumerate(data):
@@ -172,6 +190,7 @@ class SpotifyManager(object):
             print(line)
             if row_index == 0:
                 print('-' * len(line))
+        print("")
 
         return playlists
 
@@ -182,7 +201,7 @@ class SpotifyManager(object):
 
         Called by arguments:
             "-p"/"--export-playlist-tracks"
-            "-z"/"--shuffle-playlist"
+            "-z"/"--shuffle-playlist-tracks"
 
 
         Returns:
@@ -199,7 +218,7 @@ class SpotifyManager(object):
 
         Called by argument:
             "-p"/"--export-playlist-tracks"
-            "-z"/"--shuffle-playlist"
+            "-z"/"--shuffle-playlist-tracks"
 
         Args:
             playlist_id (str): ID of desired playlist.
@@ -266,7 +285,7 @@ class SpotifyManager(object):
         name = Path(filepath).stem
 
         playlist_id = self.sp.user_playlist_create(
-            self.config_parser['DEFAULT']['UserID'], name, public=False)['id']
+            self.user_id, name, public=False)['id']
 
         track_ids = [
             imported_track.uri for imported_track in imported_tracks.tracks]
@@ -279,11 +298,11 @@ class SpotifyManager(object):
 
         return playlist_id
 
-    def shuffle_playlist(self) -> None:
+    def shuffle_playlist_tracks(self) -> None:
         """
         Shuffles the track order of a selected spotify playlist.
         """
-        self.authorize("ShufflePlaylist")
+        self.authorize("ShufflePlaylistTracks")
         playlist = self.playlist_picker()
         # Overwrite variable such that it holds a Playlist object populated with tracks, instead of a 'shell' playlist object.
         playlist = self.get_playlist(playlist.id)
