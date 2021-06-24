@@ -50,7 +50,7 @@ def main():
         help="List playlists of the spotify account."
     )
     argument_parser.add_argument(
-        "-z", "--shuffle-playlist",
+        "-z", "--shuffle-playlist-tracks",
         action='store_true',
         help="Shuffles the track order of a selected spotify playlist."
     )
@@ -67,9 +67,9 @@ def main():
     # )
     args = argument_parser.parse_args()
 
-    print("(Note: If at any time you see following prompt, 'Enter the URL you "
-          "were redirected to', then comply by copy/pasting the URL into the "
-          "terminal prompt. This is per Spotify API authentication purposes.)")
+    # print("(Note: If at any time you see following prompt, 'Enter the URL you "
+    #       "were redirected to', then comply by copy/pasting the URL into the "
+    #       "terminal prompt. This is per Spotify API authentication purposes.)")
 
     # Load config parser at specified file path
     config_parser = load_config_parser(args.config)
@@ -87,10 +87,11 @@ def main():
     elif args.list_playlists:
         SpotifyMgr.list_playlists()
     elif args.shuffle_playlist:
-        SpotifyMgr.shuffle_playlist()
+        SpotifyMgr.shuffle_playlist_tracks()
     else:
-        print("No function arguments were passed, therefore script did not "
-              "take any actions.")
+        print("\n*No optional args passed to the 'spotify-playlist-utility' "
+              "console command, therefore no script actions performed. "
+              "See help message ('spotify-playlist-utility -h') for help.*\n")
 
 
 if __name__ == "__main__":
