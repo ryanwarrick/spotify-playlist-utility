@@ -46,7 +46,7 @@
             // Passing config & function specific args
             "args": [
                 "${input:pickConfigFile}", // Pass configured ini file.
-                "-c", // Create Playlist File Path Argument Value
+                "-i", // Create Playlist File Path Argument Value
                 "${input:pickImportExportFilePath}"
             ]
         },
@@ -86,7 +86,8 @@
             "type": "pickString",
             "options": [
                 "${workspaceFolder}${pathSeparator}config_populated.ini",
-                "${workspaceFolder}${pathSeparator}config.ini"
+                "${workspaceFolder}${pathSeparator}config.ini",
+                "${workspaceFolder}${pathSeparator}nonexistent_config.ini",
             ],
             "default": "${workspaceFolder}${pathSeparator}config_populated.ini"
         },
