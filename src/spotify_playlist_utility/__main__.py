@@ -12,8 +12,16 @@ def load_config_parser(config_file_path) -> configparser.ConfigParser:
     config_parser = configparser.ConfigParser()
 
     # Read the configuration file
-    config_parser.read(config_file_path)
-
+    # config_parser.read(config_file_path)
+    try:
+        with open(config_file_path) as config_file:
+            config_parser.read_file(config_file)
+    except IOError:
+        print("\n--------\nError: Config file not found at the provided path: "
+              "{0}.\nTerminating execution. See README.md ('Setup/Config' "
+              "section) for help.\n--------\n".format(
+                  config_file_path))
+        sys.exit(1)
     return config_parser
 
 
@@ -24,27 +32,6 @@ def main():
         help="Specify file path to the script's config file (see README.md)."
     )
     argument_parser.add_argument(
-        "-s", "--export-saved-tracks",
-        nargs="?", default=None, const='const',
-        help=("Generate a .csv listing of the user's saved tracks and save "
-              "to the specified file path (If not specified, default: "
-              ".\data.csv).")
-    )
-    argument_parser.add_argument(
-        "-p", "--export-playlist-tracks",
-        nargs="?", default=None, const='const',
-        help=("Generate a .csv listing of the specified playlist's tracks "
-              "and save to the specified file path (if not specified, "
-              "default: .\data.csv).")
-    )
-    argument_parser.add_argument(
-        "-c", "--create-playlist",
-        action='store',
-        help=("Generate a playlist using the name and data of a .csv at "
-              "the specified file path (format must match that of exported "
-              ".csv files).")
-    )
-    argument_parser.add_argument(
         "-l", "--list-playlists",
         action='store_true',
         help="List playlists of the spotify account."
@@ -53,6 +40,30 @@ def main():
         "-z", "--shuffle-playlist-tracks",
         action='store_true',
         help="Shuffles the track order of a selected spotify playlist."
+    )
+    argument_parser.add_argument(
+        "-s", "--export-saved-tracks",
+        nargs="?", default=None, const='const',
+        help=("Generate a .csv listing of the user's saved tracks and save "
+              "to the specified file path (If not specified, default: "
+              ".\data.csv)."),
+        metavar="<export file path>"
+    )
+    argument_parser.add_argument(
+        "-p", "--export-playlist-tracks",
+        nargs="?", default=None, const='const',
+        help=("Generate a .csv listing of the specified playlist's tracks "
+              "and save to the specified file path (if not specified, "
+              "default: .\data.csv)."),
+        metavar="<export file path>"
+    )
+    argument_parser.add_argument(
+        "-i", "--import-tracks-to-playlist",
+        action='store',
+        help=("Generate a playlist using the name and data of a .csv at "
+              "the specified file path (format must match that of exported "
+              ".csv files)."),
+        metavar="<input file path>"
     )
     # argument_parser.add_argument(
     #     "-a", "--export-all-playlists",
@@ -67,10 +78,6 @@ def main():
     # )
     args = argument_parser.parse_args()
 
-    # print("(Note: If at any time you see following prompt, 'Enter the URL you "
-    #       "were redirected to', then comply by copy/pasting the URL into the "
-    #       "terminal prompt. This is per Spotify API authentication purposes.)")
-
     # Load config parser at specified file path
     config_parser = load_config_parser(args.config)
 
@@ -82,11 +89,11 @@ def main():
         SpotifyMgr.export_saved_tracks(args.export_saved_tracks)
     elif args.export_playlist_tracks:
         SpotifyMgr.export_playlist_tracks(args.export_playlist_tracks)
-    elif args.create_playlist:
-        SpotifyMgr.create_playlist(args.create_playlist)
+    elif args.import_tracks_to_playlist:
+        SpotifyMgr.import_tracks_to_playlist(args.import_tracks_to_playlist)
     elif args.list_playlists:
         SpotifyMgr.list_playlists()
-    elif args.shuffle_playlist:
+    elif args.shuffle_playlist_tracks:
         SpotifyMgr.shuffle_playlist_tracks()
     else:
         print("\n*No optional args passed to the 'spotify-playlist-utility' "
