@@ -1,7 +1,7 @@
 import csv
 import os
 import typing
-from pathlib import Path
+import sys
 
 from spotify_playlist_utility.Track import Track
 
@@ -13,35 +13,38 @@ class TrackListing():
     def export_tracks(self, file_path) -> None:
         if file_path == 'const':
             file_path = os.path.join(os.getcwd(), "data.csv")
-        with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = Track.csv_export_header()
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        try:
+            with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
+                fieldnames = Track.csv_export_header()
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-            writer.writeheader()
-            for track in self.tracks:
-                writer.writerow(track.csv_export_row())
+                writer.writeheader()
+                for track in self.tracks:
+                    writer.writerow(track.csv_export_row())
+            print(
+                "Tracks Export File saved to the following path: {0}".format(file_path))
+        except OSError:
+            print("Operation Failed: Error writing to file.")
+            sys.exit(1)
 
     def import_tracks(self, file_path) -> None:
-        with open(file_path, 'r', newline='', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                track = Track(row['uri'], row['name'],
-                              row['artist'], row['album'])
-                self.tracks.append(track)
+        try:
+            with open(file_path, 'r', newline='', encoding='utf-8') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    track = Track(row['uri'], row['name'],
+                                  row['artist'], row['album'])
+                    self.tracks.append(track)
+        except OSError:
+            print("Operation Failed: Error reading from file.")
+            sys.exit(1)
 
 
 class Playlist(TrackListing):
-    def __init__(self, uri: str = None, name: str = None, description: str = None, tracks: typing.List[Track] = [], reported_length=None):
+    def __init__(self, uri: str = None, name: str = None, description: str = None, tracks: typing.List[Track] = [], track_count=None):
         super().__init__(tracks)
         self.uri = uri
         self.name = name
         self.description = description
-        self.reported_length = reported_length
+        self.track_count = track_count
         self.id = uri.split(":")[-1]
-
-    def __str__(self):
-        format_string = "{0} - {1}"
-        if self.tracks:
-            return format_string.format(self.name, str(len(self.tracks)))
-        else:
-            return format_string.format(self.name, str(self.reported_length))

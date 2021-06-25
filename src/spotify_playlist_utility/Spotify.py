@@ -39,15 +39,31 @@ class SpotifyManager(object):
 
     def authorize(self, scope_set: str) -> None:
         if not self.authorized:
+            auth_message = ("\n-------\nNote: If valid session was not "
+                            "previously cached, then the spotipy library will "
+                            "open a web browser to authorize the user. If "
+                            "script flow pauses, check your browser for the "
+                            "challenge. Review the permissions and 'Agree' to "
+                            "authorize the app you previously created on "
+                            "Spotify's developer site per the README.md"
+                            "('SetupConfig' section).\n-------\n")
+            print(auth_message)
             auth_manager = SpotifyOAuth(
                 client_id=self.config_parser["DEFAULT"]["ClientID"],
                 client_secret=self.config_parser["DEFAULT"]["ClientSecret"],
                 redirect_uri=self.config_parser["DEFAULT"]
                 ["RedirectURI"],
-                scope=SpotifyManager.SCOPES[scope_set]
+                scope=SpotifyManager.SCOPES[scope_set],
+                open_browser=True
             )
+            """
+                Note on 'open_browser' argument above:
+                Change to False so that console provides URL to navigate to.
+                Then, one enters the URL they were redirected to.
+                'False' works, but I find 'True' to be more clear for end user.
+            """
+
             self.sp = spotipy.Spotify(auth_manager=auth_manager)
-            me = self.sp.me()
             self.authorized = True
             self.user_id = self.sp.me()['id']
 
@@ -120,16 +136,38 @@ class SpotifyManager(object):
             user's playlists.
         """
         playlists = []
-        playlist_response = self.sp.current_user_playlists()
-        while playlist_response:
-            for playlist_data in playlist_response['items']:
+        current_user_playlists_response = self.sp.current_user_playlists()
+        while current_user_playlists_response:
+            for playlist_data in current_user_playlists_response['items']:
+                '''
+                Per my testing, the '/v1/me/playlists' endpoint 
+                ('current_user_playlists' spotipy function) is currently 
+                buggy when reporting track count for returned playlists. I'm 
+                unclear as to why, but when I create valid playlists with this 
+                script, they sometimes get reported as having a length of 0 in 
+                response to the above API endpoint call. If I drill down into 
+                each playlist using '/v1/playlists/{playlist_id}' ('playlist' 
+                spotipy function), then the reported tracks total is accurate.
+
+                Therefore, this logic is to work around that discrepancy by 
+                making a call to the '/v1/playlists/{playlist_id}' for each 
+                received playlist to grab the tracks count.
+                '''
+                playlist_response = self.sp.playlist(playlist_data['id'])
+                track_count = playlist_response['tracks']['total']
+
+                '''
+                Now to continue on building the Playlist objects using the 
+                track_count specially captured via the call above (because of track count errors in playlist_data) and all other values captured within the playlist_data object
+                '''
                 playlist = Playlist(
-                    uri=playlist_data['uri'], name=playlist_data['name'], description=playlist_data['description'], reported_length=playlist_data['tracks']['total'])
+                    uri=playlist_data['uri'], name=playlist_data['name'], description=playlist_data['description'], track_count=track_count)
                 playlists.append(playlist)
-            if playlist_response['next']:
-                playlist_response = self.sp.next(playlist_response)
+            if current_user_playlists_response['next']:
+                current_user_playlists_response = self.sp.next(
+                    current_user_playlists_response)
             else:
-                playlist_response = None
+                current_user_playlists_response = None
         return playlists
 
     def list_playlists(self) -> typing.List[Playlist]:
@@ -159,7 +197,7 @@ class SpotifyManager(object):
             playlist.name for playlist in playlists
         ]
         playlist_track_counts_for_table_printing = [
-            str(playlist.reported_length) for playlist in playlists
+            str(playlist.track_count) for playlist in playlists
         ]
 
         column_length_maximums = [
@@ -232,7 +270,7 @@ class SpotifyManager(object):
             uri=playlist_response["uri"],
             name=playlist_response["name"],
             description=playlist_response["description"],
-            reported_length=playlist_response["tracks"]["total"]
+            track_count=playlist_response["tracks"]["total"]
         )
         playlist_tracks_response = self.sp.playlist_items(playlist.id)
 
@@ -265,9 +303,9 @@ class SpotifyManager(object):
         playlist = self.get_playlist(playlist.id)
         playlist.export_tracks(filepath)
 
-    def create_playlist(self, filepath: str) -> str:
+    def import_tracks_to_playlist(self, filepath: str) -> str:
         """
-        Generate a playlist using the name and data of a .csv at the specified 
+        Generate a playlist using the name and data of a .csv at the specified
         file path (format must match that of exported .csv files).
 
         Args:
@@ -286,6 +324,9 @@ class SpotifyManager(object):
 
         playlist_id = self.sp.user_playlist_create(
             self.user_id, name, public=False)['id']
+
+        print(
+            "Tracks Import File uploaded as Spotify playlist with the following name: {0}".format(name))
 
         track_ids = [
             imported_track.uri for imported_track in imported_tracks.tracks]
@@ -315,6 +356,8 @@ class SpotifyManager(object):
                 range_length=1,
                 snapshot_id=None
             )
+
+        print("Shuffling complete on playlist: {0}".format(playlist.name))
 
     def chunk_list(self, list, n):
         return [list[i:i + n] for i in range(0, len(list), n)]
