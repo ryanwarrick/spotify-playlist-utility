@@ -1,6 +1,14 @@
-# <img alt="spotify-playlist-utility logo" src="https://github.com/ryanwarrick/spotify-playlist-utility/blob/master/docs/images/snakify.png?raw=true" height="100">
+<p align="center">
+    <img alt="spotify-playlist-utility logo" src="https://github.com/ryanwarrick/spotify-playlist-utility/blob/master/docs/images/snakify.png?raw=true" height="100">
+</p>
 
-    
+![license](https://img.shields.io/github/license/ryanwarrick/spotify-playlist-utility)
+![GitHub last commit](https://img.shields.io/github/last-commit/ryanwarrick/spotify-playlist-utility)
+[![GitHub issues](https://img.shields.io/github/issues/ryanwarrick/spotify-playlist-utility)](https://github.com/ryanwarrick/spotify-playlist-utility/issues)
+![PyPI](https://img.shields.io/pypi/v/spotify-playlist-utility)
+[![code with hearth by ryanwarrick](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-ryanwarrick-ff1414.svg?style=flat-square)](https://github.com/ryanwarrick)
+
+
 # Spotify-Playlist-Utility
 
 Python utility to archive, restore, & shuffle Spotify playlists.
@@ -23,15 +31,7 @@ For example, this project...
 * includes .vscode configs for easy development in VS Code
 * config file support
 * command line option/argument style application
-
-<div align="center">
-    ![license](https://img.shields.io/github/license/ryanwarrick/spotify-playlist-utility)
-    ![GitHub last commit](https://img.shields.io/github/last-commit/ryanwarrick/spotify-playlist-utility)
-    [![GitHub issues](https://img.shields.io/github/issues/ryanwarrick/spotify-playlist-utility)](https://github.com/ryanwarrick/spotify-playlist-utility/issues)
-    ![PyPI](https://img.shields.io/pypi/v/spotify-playlist-utility)
-    /[![code with hearth by GITHUB_USERNAME](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-ryanwarrick-ff1414.svg?style=flat-square)](https://github.com/ryanwarrick)
-</div>
-  
+ 
 ## Installation 
 
 Prerequisite: System must have Python 3.6+ installed (and pip - included with Python). See [Python docs here](https://wiki.python.org/moin/BeginnersGuide/Download) for help installing.
@@ -43,7 +43,6 @@ python -m pip install spotify-playlist-utility
 
 See gif illustrating pip install of the package:
 ![Install Demo](docs/images/install_demo.gif)
-<!-- TODO: Create new install gif once updates published to PyPI -->
 
 ## Setup/Configuration
 
