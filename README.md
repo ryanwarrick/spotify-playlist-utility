@@ -40,9 +40,6 @@ Next, run the following pip command in the terminal to install the package from 
 ```
 python -m pip install spotify-playlist-utility
 ```
-
-See gif illustrating pip install of the package:
-
 ![Install Demo](docs/images/install_demo.gif)
 
 ## Setup/Configuration
