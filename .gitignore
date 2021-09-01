@@ -1,5 +1,5 @@
 # Test config.ini file (contains sensitive credential/API info)
-config_populated.ini
+my_config.ini
 
 # Spotify/Spotipy Authorization Cache Files
 .cache*

@@ -89,8 +89,16 @@ spotify-playlist-utility <config_ini_file_path> -i <input_csv_file_path>
 spotify-playlist-utility <config_ini_file_path> -z
 ```
 ![Shuffle Playlist](docs/images/shuffle_playlist_demo.gif)
+
+# Files Not in Change Management (Manual Backups Required)
+Some files within projects are not controlled by change management as specified by the .gitignore config because they contain sensitive data, therefore it's not appropriate to sync them to a change management repository.
+
+These files include:
+* <project_root>/my_config.ini (spotify user-specific credentials)
+
+To avoid data loss of these files that aren't Git tracked, make sure to backup these files to a different location, as appropriate.
   
-## Contributors
+# Contributors
 
 - Development: [@ryanwarrick - Github](https://www.github.com/ryanwarrick)
 - Logo Asset: [@UniTheDino - Twitter](https://twitter.com/unithedino)

@@ -85,11 +85,11 @@
             "description": "Select config file to be used by the script.",
             "type": "pickString",
             "options": [
-                "${workspaceFolder}${pathSeparator}config_populated.ini",
+                "${workspaceFolder}${pathSeparator}my_config.ini",
                 "${workspaceFolder}${pathSeparator}config.ini",
                 "${workspaceFolder}${pathSeparator}nonexistent_config.ini",
             ],
-            "default": "${workspaceFolder}${pathSeparator}config_populated.ini"
+            "default": "${workspaceFolder}${pathSeparator}my_config.ini"
         },
         {
             "id": "pickImportExportFilePath",
