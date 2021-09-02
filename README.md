@@ -4,16 +4,15 @@
 
 ![license](https://img.shields.io/github/license/ryanwarrick/spotify-playlist-utility)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ryanwarrick/spotify-playlist-utility)
-[![GitHub issues](https://img.shields.io/github/issues/ryanwarrick/spotify-playlist-utility)](https://github.com/ryanwarrick/spotify-playlist-utility/issues)
 ![PyPI](https://img.shields.io/pypi/v/spotify-playlist-utility)
 [![code with hearth by ryanwarrick](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-ryanwarrick-ff1414.svg?style=flat-square)](https://github.com/ryanwarrick)
 
 
 # Spotify-Playlist-Utility
 
-Python utility to archive, restore, & shuffle Spotify playlists.
+Spotify-Playlist-Utility is a Python tool to archive, restore, & shuffle Spotify playlists.
 
-Spotify's service has a few downsides. Fortunately, they offer a fairly nice Web API. To fill in these feature gaps, I developed a Python cmd line utility which offers the following features:
+Spotify's service has a few feature gaps. Fortunately, they offer a fairly nice Web API. To fill in these gaps, I developed a Python cmd-line utility that offers the following features:
 * Export: Spotify Saved (Liked) Tracks -> CSV track listing
 * Export: Spotify Playlist -> CSV track listing
 * Import: CSV track listing -> Spotify Playlist
@@ -21,16 +20,17 @@ Spotify's service has a few downsides. Fortunately, they offer a fairly nice Web
 
 ## Project Context:
 
-Long ago, I informally self-taught myself Python in a mostly hobby capacity. As my cybersecurity/IT career has progressed, I've worked to formalize my Python skills so that I could write compliant, well-documented, open-source ready, and packaged/deployable Python packages.
+Long ago, I informally self-taught myself Python in a mostly hobby capacity. As my cybersecurity/IT career has progressed, I've worked to formalize my Python skills so that I could write compliant, well-documented, ready for open-source, and packaged/deployable Python packages.
 
 I used this project idea as an opportunity to build out a full-fledged Python project repo.
+
 For example, this project...
 * has a package with various modules within it
 * is easily distributable: .tar.gz/.whl support and on the Python Package Index (PyPI/pip)
 * has sphinx auto-generated docs documenting classes/functions
 * includes .vscode configs for easy development in VS Code
 * config file support
-* command line option/argument style application
+* command-line application with argument support
  
 ## Installation 
 
@@ -57,7 +57,7 @@ This script interacts with Spotify's Web API via the [spotipy](https://github.co
 2) Create a customized configuration file for use by the package's 'spotify-playlist-utility' console command:
     * Download a copy of the [template configuration file ('config.ini') ](https://github.com/ryanwarrick/spotify-playlist-utility/blob/master/config.ini) found  at the project root.
         * (Note: If you are working from source, you can grab the same file from your clone of the repo)
-    * Edit the file to overwrite the placeholder values with the 'Client ID' and 'Client Secret' we previously noted in Step 1. You can leave 'RedirectURI' unmodified. See example below...
+    * Edit the file to overwrite the placeholder values with the 'Client ID' and 'Client Secret' we previously noted in Step 1. You can leave 'RedirectURI' unmodified. See the example below...
 
 ```
 [DEFAULT]
