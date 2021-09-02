@@ -10,7 +10,7 @@
 
 # Spotify-Playlist-Utility
 
-Spotify-Playlist-Utility is a Python tool to archive, restore, & shuffle Spotify playlists.
+Spotify-Playlist-Utility is a Python command-line utility to archive, restore, & shuffle Spotify playlists.
 
 Spotify's service has a few feature gaps. Fortunately, they offer a fairly nice Web API. To fill in these gaps, I developed a Python cmd-line utility that offers the following features:
 * Export: Spotify Saved (Liked) Tracks -> CSV track listing
