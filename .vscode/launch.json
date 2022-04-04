@@ -77,6 +77,20 @@
                 "${input:pickConfigFile}", // Pass configured ini file.
                 "-z", // Shuffle Playlist Argument
             ]
+        },
+        { // CONFIG 06) Function: Export Saved Tracks To Liked Memory Playlist
+            // Standard debug config ran from prj root (workspaceFolder)
+            "name": "Function: Export Saved Tracks To Liked Memory Playlist",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}${pathSeparator}src${pathSeparator}spotify_playlist_utility${pathSeparator}__main__.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            // Passing config & function specific args
+            "args": [
+                "${input:pickConfigFile}", // Pass configured ini file.
+                "-a", // Export Saved Tracks To Liked Memory Playlist Argument
+            ]
         }
     ],
     "inputs": [

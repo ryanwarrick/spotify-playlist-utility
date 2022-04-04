@@ -27,6 +27,7 @@ def load_config_parser(config_file_path) -> configparser.ConfigParser:
 
 def main():
     argument_parser = argparse.ArgumentParser()
+    # TODO: Revisit argument structure and add exclusivity to switches incompatible when executed simultaneously
     argument_parser.add_argument(
         "config",
         help="Specify file path to the script's config file (see README.md)."
@@ -65,6 +66,13 @@ def main():
               ".csv files)."),
         metavar="<input file path>"
     )
+    argument_parser.add_argument(
+        "-a", "--export-saved-tracks-to-liked-memory-playlist",
+        action='store_true',
+        help=("Append saved tracks to liked memory playlist. Create liked "
+              "memory playlist first, if not detected.")
+    )
+
     # argument_parser.add_argument(
     #     "-a", "--export-all-playlists",
     #     nargs="?", default=None, const='const',
@@ -95,6 +103,8 @@ def main():
         SpotifyMgr.list_playlists()
     elif args.shuffle_playlist_tracks:
         SpotifyMgr.shuffle_playlist_tracks()
+    elif args.export_saved_tracks_to_liked_memory_playlist:
+        SpotifyMgr.export_saved_tracks_to_liked_memory_playlist()
     else:
         print("\n*No optional args passed to the 'spotify-playlist-utility' "
               "console command, therefore no script actions performed. "

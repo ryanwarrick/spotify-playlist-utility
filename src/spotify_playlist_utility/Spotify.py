@@ -1,7 +1,8 @@
-import random
-from pathlib import Path
-import typing
 import configparser
+import random
+import sys
+import typing
+from pathlib import Path
 
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -358,6 +359,52 @@ class SpotifyManager(object):
             )
 
         print("Shuffling complete on playlist: {0}".format(playlist.name))
+
+    def export_saved_tracks_to_liked_memory_playlist(self) -> None:
+        # Get liked songs
+        self.authorize("ListPlaylists")
+        saved_tracks = self.get_saved_tracks()
+
+        # Get playlists to detect for liked memory playlist
+        playlists = self.get_playlists()
+        # list of all elements with .n==30
+        liked_memory_playlist_list = [
+            x for x in playlists if x.name == "Liked Memory"]
+
+        liked_memory_playlist_id = None
+
+        self.authorize("CreateEditPlaylist")
+
+        # Create liked memory playlist, if it doesn't exist
+        if not liked_memory_playlist_list:  # empty list
+            liked_memory_playlist_id = self.sp.user_playlist_create(
+                self.user_id, "Liked Memory", public=False)['id']
+
+        elif len(liked_memory_playlist_list) == 1:
+            liked_memory_playlist_id = liked_memory_playlist_list[0].id
+
+        # Detect for too many matching playlists and exit if collision
+        else:  # len(liked_memory_playlist_list) > 1
+            sys.exit(
+                "Too many playlists matching the 'Liked Memory' name found.... Don't know which one is correct. Exiting.")
+
+        # Append saved tracks to liked memory playlist
+        liked_memory_playlist = self.get_playlist(liked_memory_playlist_id)
+        saved_tracks_to_append = []
+        for saved_track in saved_tracks.tracks:
+            if not any(liked_memory_track.uri == saved_track.uri for liked_memory_track in liked_memory_playlist.tracks):
+                saved_tracks_to_append.append(saved_track)
+        saved_track_to_append_ids = [
+            saved_track_to_append.uri for saved_track_to_append in saved_tracks_to_append]
+
+        saved_tracks_to_append_id_chunks = self.chunk_list(
+            saved_track_to_append_ids, 100)
+
+        for saved_track_to_append_id_chunk in saved_tracks_to_append_id_chunks:
+            self.sp.playlist_add_items(
+                liked_memory_playlist_id, saved_track_to_append_id_chunk, 0)
+
+        return liked_memory_playlist_id
 
     def chunk_list(self, list, n):
         return [list[i:i + n] for i in range(0, len(list), n)]

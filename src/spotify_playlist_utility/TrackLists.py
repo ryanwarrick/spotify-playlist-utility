@@ -1,7 +1,7 @@
 import csv
 import os
-import typing
 import sys
+import typing
 
 from spotify_playlist_utility.Track import Track
 
